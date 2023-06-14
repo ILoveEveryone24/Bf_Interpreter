@@ -55,34 +55,35 @@ func interpret(input []byte, j io.Reader, w io.Writer){
 	
 	var i uint = 0
 	var progLen uint = uint(len(input))
+	stringInput := string(input)
 
 	for i < progLen{
-		switch chara := string(input[i]); chara{
-		case "+":
+		switch chara := stringInput[i]; chara{
+		case '+':
 			list[cnt]++
-		case "-":
+		case '-':
 			list[cnt]--	
-		case "<":
+		case '<':
 			cnt--
 			if cnt < 0{
 				cnt = 29999
 			}
-		case ">":
+		case '>':
 			cnt++
 			if cnt > 29999{
 				cnt = 0
 			}
-		case ".":
+		case '.':
 			fmt.Fprintf(w, "%c", list[cnt])
-		case ",":
+		case ',':
 			if list[cnt], err = reader.ReadByte(); err != nil{
 				os.Exit(0)
 			}
-		case "[":
+		case '[':
 			if list[cnt] == 0{
 				i = jumps[i]
 			}
-		case "]":
+		case ']':
 			if list[cnt] != 0 {
 				i = jumps[i]
 			}
